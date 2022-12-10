@@ -1,10 +1,10 @@
-# tgimd
+# Thanks God It's Magic Day !
 
-A new Flutter project.
+A Flutter project that intends to be an companion MTG app to use in friday night magic.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+.....
 
 A few resources to get you started if this is your first Flutter project:
 
