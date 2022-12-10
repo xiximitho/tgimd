@@ -1,6 +1,6 @@
 # Thanks God It's Magic Day !
 
-A Flutter project that intends to be an companion MTG app to use in friday night magic.
+A Flutter project that intends to be a companion MTG app to use in physical Magic.
 
 ## Getting Started
 
