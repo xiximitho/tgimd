@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class PlayerAreaWidget extends StatefulWidget {
   const PlayerAreaWidget(
@@ -17,7 +18,14 @@ class PlayerAreaWidget extends StatefulWidget {
 }
 
 class _PlayerAreaWidgetState extends State<PlayerAreaWidget> {
+  Color _actualColor = Colors.yellow;
   int _life = 20;
+
+  void changeColor(Color color) {
+    setState(() {
+      _actualColor = color;
+    });
+  }
 
   void _increaseLife() {
     setState(() {
@@ -37,10 +45,37 @@ class _PlayerAreaWidgetState extends State<PlayerAreaWidget> {
     });
   }
 
+  void _callPicker() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          insetPadding: const EdgeInsets.all(14),
+          title: const Text('Change color'),
+          backgroundColor: Colors.white70,
+          alignment: Alignment.center,
+          content: SingleChildScrollView(
+              child: BlockPicker(
+            pickerColor: _actualColor,
+            onColorChanged: changeColor,
+          )),
+          actions: [
+            ElevatedButton(
+              child: const Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: widget.color,
+      color: _actualColor,
       //transform: Matrix4.diagonal3Values(_size, _size, 1.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,8 +90,9 @@ class _PlayerAreaWidgetState extends State<PlayerAreaWidget> {
                 )
               : ButtonBar(
                   children: [
-                    const IconButton(
-                        onPressed: null, icon: Icon(Icons.settings)),
+                    IconButton(
+                        onPressed: _callPicker,
+                        icon: const Icon(Icons.settings)),
                     IconButton(
                         onPressed: _resetLife,
                         icon: const Icon(Icons.restart_alt_outlined))
@@ -114,8 +150,9 @@ class _PlayerAreaWidgetState extends State<PlayerAreaWidget> {
           widget.invert
               ? ButtonBar(
                   children: [
-                    const IconButton(
-                        onPressed: null, icon: Icon(Icons.settings)),
+                    IconButton(
+                        onPressed: _callPicker,
+                        icon: const Icon(Icons.settings)),
                     IconButton(
                         onPressed: _resetLife,
                         icon: const Icon(Icons.restart_alt_outlined))

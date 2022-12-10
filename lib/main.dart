@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tgimd/PlayerAreaWidget.dart';
+import 'package:tgimd/widgets/player_area_widget.dart';
 
 void main() {
   runApp(const MyApp());
