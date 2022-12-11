@@ -46,12 +46,12 @@ class OcrScreen extends StatefulWidget {
 }
 
 class OcrScreenState extends State<OcrScreen> {
-  int? _cameraOcr = FlutterMobileVision.CAMERA_BACK;
-  bool _autoFocusOcr = true;
-  bool _torchOcr = false;
-  bool _multipleOcr = false;
-  bool _waitTapOcr = false;
-  bool _showTextOcr = true;
+  final int _cameraOcr = FlutterMobileVision.CAMERA_BACK;
+  final bool _autoFocusOcr = true;
+  final bool _torchOcr = false;
+  final bool _multipleOcr = false;
+  final bool _waitTapOcr = true;
+  final bool _showTextOcr = true;
   Size? _previewOcr;
   List<OcrText> _textsOcr = [];
 
@@ -72,135 +72,10 @@ class OcrScreenState extends State<OcrScreen> {
   }
 
   ///
-  /// Camera list
-  ///
-  List<DropdownMenuItem<int>> _getCameras() {
-    List<DropdownMenuItem<int>> cameraItems = [];
-
-    cameraItems.add(const DropdownMenuItem(
-      value: FlutterMobileVision.CAMERA_BACK,
-      child: Text('BACK'),
-    ));
-
-    cameraItems.add(const DropdownMenuItem(
-      value: FlutterMobileVision.CAMERA_FRONT,
-      child: Text('FRONT'),
-    ));
-
-    return cameraItems;
-  }
-
-  ///
-  /// Preview sizes list
-  ///
-  List<DropdownMenuItem<Size>> _getPreviewSizes(int facing) {
-    List<DropdownMenuItem<Size>> previewItems = [];
-
-    List<Size>? sizes = FlutterMobileVision.getPreviewSizes(facing);
-
-    if (sizes != null) {
-      for (var size in sizes) {
-        previewItems.add(
-          DropdownMenuItem(
-            value: size,
-            child: Text(size.toString()),
-          ),
-        );
-      }
-    } else {
-      previewItems.add(
-        const DropdownMenuItem(
-          value: null,
-          child: Text('Empty'),
-        ),
-      );
-    }
-
-    return previewItems;
-  }
-
-  ///
   /// OCR Screen
   ///
   Widget _getOcrScreen(BuildContext context) {
     List<Widget> items = [];
-
-    items.add(const Padding(
-      padding: EdgeInsets.only(
-        top: 8.0,
-        left: 18.0,
-        right: 18.0,
-      ),
-      child: Text('Camera:'),
-    ));
-
-    items.add(Padding(
-      padding: const EdgeInsets.only(
-        left: 18.0,
-        right: 18.0,
-      ),
-      child: DropdownButton<int>(
-        items: _getCameras(),
-        onChanged: (value) {
-          _previewOcr = null;
-          setState(() => _cameraOcr = value);
-        },
-        value: _cameraOcr,
-      ),
-    ));
-
-    items.add(const Padding(
-      padding: EdgeInsets.only(
-        top: 8.0,
-        left: 18.0,
-        right: 18.0,
-      ),
-      child: Text('Preview size:'),
-    ));
-
-    items.add(Padding(
-      padding: const EdgeInsets.only(
-        left: 18.0,
-        right: 18.0,
-      ),
-      child: DropdownButton<Size>(
-        items: _getPreviewSizes(_cameraOcr ?? 0),
-        onChanged: (value) {
-          setState(() => _previewOcr = value);
-        },
-        value: _previewOcr,
-      ),
-    ));
-
-    items.add(SwitchListTile(
-      title: const Text('Auto focus:'),
-      value: _autoFocusOcr,
-      onChanged: (value) => setState(() => _autoFocusOcr = value),
-    ));
-
-    items.add(SwitchListTile(
-      title: const Text('Torch:'),
-      value: _torchOcr,
-      onChanged: (value) => setState(() => _torchOcr = value),
-    ));
-
-    items.add(SwitchListTile(
-      title: const Text('Return all texts:'),
-      value: _multipleOcr,
-      onChanged: (value) => setState(() => _multipleOcr = value),
-    ));
-
-    items.add(SwitchListTile(
-      title: const Text('Capture when tap screen:'),
-      value: _waitTapOcr,
-      onChanged: (value) => setState(() => _waitTapOcr = value),
-    ));
-
-    items.add(SwitchListTile(
-      title: const Text('Show text:'),
-      value: _showTextOcr,
-      onChanged: (value) => setState(() => _showTextOcr = value),
-    ));
 
     items.add(
       Padding(
@@ -211,7 +86,7 @@ class OcrScreenState extends State<OcrScreen> {
         ),
         child: ElevatedButton(
           onPressed: _read,
-          child: const Text('READ!'),
+          child: const Text('Ler'),
         ),
       ),
     );
@@ -226,6 +101,15 @@ class OcrScreenState extends State<OcrScreen> {
             .toList(),
       ),
     );
+
+    items.add(const Padding(
+      padding: EdgeInsets.only(
+        left: 18,
+        right: 18,
+        bottom: 12,
+      ),
+      child: ElevatedButton(onPressed: null, child: Text("Analisar")),
+    ));
 
     return ListView(
       padding: const EdgeInsets.only(
@@ -247,15 +131,13 @@ class OcrScreenState extends State<OcrScreen> {
         autoFocus: _autoFocusOcr,
         multiple: _multipleOcr,
         waitTap: _waitTapOcr,
-        //OPTIONAL: close camera after tap, even if there are no detection.
-        //Camera would usually stay on, until there is a valid detection
         forceCloseCameraOnTap: true,
-        //OPTIONAL: path to save image to. leave empty if you do not want to save the image
+        //Opcional: caminho para salvar a imagem, vazio = não salvar
         imagePath: '', //'path/to/file.jpg'
         showText: _showTextOcr,
         preview: _previewOcr ?? FlutterMobileVision.PREVIEW,
         scanArea: Size(scanpreviewOcr.width - 20, scanpreviewOcr.height - 20),
-        camera: _cameraOcr ?? FlutterMobileVision.CAMERA_BACK,
+        camera: _cameraOcr,
         fps: 2.0,
       );
     } on Exception {
