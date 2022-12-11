@@ -18,6 +18,8 @@ class PlayerAreaWidget extends StatefulWidget {
 }
 
 class _PlayerAreaWidgetState extends State<PlayerAreaWidget> {
+  //
+  //
   Color _actualColor = Colors.yellow;
   int _life = 20;
 
@@ -81,11 +83,11 @@ class _PlayerAreaWidgetState extends State<PlayerAreaWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           widget.invert
-              ? const ButtonBar(
+              ? ButtonBar(
                   children: [
                     IconButton(
-                        onPressed: null,
-                        icon: Icon(Icons.stay_primary_portrait_rounded))
+                        onPressed: () => {},
+                        icon: const Icon(Icons.stay_primary_portrait_rounded))
                   ],
                 )
               : ButtonBar(
