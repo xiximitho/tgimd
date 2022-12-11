@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_vision_2/flutter_mobile_vision_2.dart';
 
-import 'ocr_text_detail.dart';
+import '../widgets/ocr_text_detail.dart';
 
 ///
 ///
