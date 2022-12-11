@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
                     )
                   ],
                 ),
-                ocrScreen(),
+                const OcrScreen(),
               ],
             )),
       ),

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobile_vision_2/flutter_mobile_vision_2.dart';
 
 import 'ocr_text_detail.dart';
@@ -9,7 +8,7 @@ import 'ocr_text_detail.dart';
 ///
 ///
 ///
-void main() => runApp(ocrScreen());
+void main() => runApp(const OcrScreen());
 
 ///
 ///
@@ -21,7 +20,7 @@ void main() => runApp(ocrScreen());
 class OcrTextWidget extends StatelessWidget {
   final OcrText ocrText;
 
-  const OcrTextWidget(this.ocrText);
+  const OcrTextWidget(this.ocrText, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,46 +38,14 @@ class OcrTextWidget extends StatelessWidget {
   }
 }
 
-class ocrScreen extends StatefulWidget {
+class OcrScreen extends StatefulWidget {
+  const OcrScreen({super.key});
+
   @override
-  ocrScreenState createState() => ocrScreenState();
+  OcrScreenState createState() => OcrScreenState();
 }
 
-class ocrScreenState extends State<ocrScreen> {
-  String _platformVersion = 'Unknown';
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion = await FlutterMobileVision.platformVersion ??
-          'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
-  }
-
-  final int _cameraBarcode = FlutterMobileVision.CAMERA_BACK;
-  final int _onlyFormatBarcode = Barcode.ALL_FORMATS;
-  final bool _autoFocusBarcode = true;
-  final bool _torchBarcode = false;
-  final bool _multipleBarcode = false;
-  final bool _waitTapBarcode = false;
-  final bool _showTextBarcode = false;
-  Size? _previewBarcode;
-  final List<Barcode> _barcodes = [];
-
+class OcrScreenState extends State<OcrScreen> {
   int? _cameraOcr = FlutterMobileVision.CAMERA_BACK;
   bool _autoFocusOcr = true;
   bool _torchOcr = false;
@@ -88,28 +55,11 @@ class ocrScreenState extends State<ocrScreen> {
   Size? _previewOcr;
   List<OcrText> _textsOcr = [];
 
-  final int _cameraFace = FlutterMobileVision.CAMERA_FRONT;
-  final bool _autoFocusFace = true;
-  final bool _torchFace = false;
-  final bool _multipleFace = true;
-  final bool _showTextFace = true;
-  Size? _previewFace;
-  final List<Face> _faces = [];
-
-  ///
-  ///
-  ///
   @override
   void initState() {
     super.initState();
-    initPlatformState();
     FlutterMobileVision.start().then((previewSizes) => setState(() {
-          if (previewSizes[_cameraBarcode] == null) {
-            return;
-          }
-          _previewBarcode = previewSizes[_cameraBarcode]!.first;
           _previewOcr = previewSizes[_cameraOcr]!.first;
-          _previewFace = previewSizes[_cameraFace]!.first;
         }));
   }
 
@@ -119,24 +69,6 @@ class ocrScreenState extends State<ocrScreen> {
   @override
   Widget build(BuildContext context) {
     return _getOcrScreen(context);
-  }
-
-  ///
-  /// Scan formats
-  ///
-  List<DropdownMenuItem<int>> _getFormats() {
-    List<DropdownMenuItem<int>> formatItems = [];
-
-    Barcode.mapFormat.forEach((key, value) {
-      formatItems.add(
-        DropdownMenuItem(
-          value: key,
-          child: Text(value),
-        ),
-      );
-    });
-
-    return formatItems;
   }
 
   ///

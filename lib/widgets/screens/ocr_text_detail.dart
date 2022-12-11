@@ -7,16 +7,16 @@ import 'package:flutter_mobile_vision_2/flutter_mobile_vision_2.dart';
 class OcrTextDetail extends StatefulWidget {
   final OcrText ocrText;
 
-  const OcrTextDetail(this.ocrText);
+  const OcrTextDetail(this.ocrText, {super.key});
 
   @override
-  _OcrTextDetailState createState() => _OcrTextDetailState();
+  OcrTextDetailState createState() => OcrTextDetailState();
 }
 
 ///
 ///
 ///
-class _OcrTextDetailState extends State<OcrTextDetail> {
+class OcrTextDetailState extends State<OcrTextDetail> {
   ///
   ///
   ///
