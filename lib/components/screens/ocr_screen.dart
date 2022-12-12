@@ -2,21 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_vision_2/flutter_mobile_vision_2.dart';
+import 'package:provider/provider.dart';
+import 'package:tgimd/components/models/select_color.dart';
+import 'package:tgimd/components/screens/card_history.dart';
 
-import '../widgets/ocr_text_detail.dart';
+import '../widgets/card_detail.dart';
 
-///
-///
-///
-void main() => runApp(const OcrScreen());
-
-///
-///
-///
-///
-//////
-/// OcrTextWidget
-///
 class OcrTextWidget extends StatelessWidget {
   final OcrText ocrText;
 
@@ -31,7 +22,7 @@ class OcrTextWidget extends StatelessWidget {
       trailing: const Icon(Icons.arrow_forward),
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => OcrTextDetail(ocrText),
+          builder: (context) => CardDetail(ocrText),
         ),
       ),
     );
@@ -39,6 +30,7 @@ class OcrTextWidget extends StatelessWidget {
 }
 
 class OcrScreen extends StatefulWidget {
+  static const routeName = '/ocr';
   const OcrScreen({super.key});
 
   @override
@@ -54,10 +46,11 @@ class OcrScreenState extends State<OcrScreen> {
   final bool _showTextOcr = true;
   Size? _previewOcr;
   List<OcrText> _textsOcr = [];
-
+  late SessionItems ocrWords;
   @override
   void initState() {
     super.initState();
+
     FlutterMobileVision.start().then((previewSizes) => setState(() {
           _previewOcr = previewSizes[_cameraOcr]!.first;
         }));
@@ -68,13 +61,17 @@ class OcrScreenState extends State<OcrScreen> {
   ///
   @override
   Widget build(BuildContext context) {
-    return _getOcrScreen(context);
+    ocrWords = context.watch<SessionItems>();
+    return Scaffold(
+      appBar: AppBar(),
+      body: _getOcrScreen(context, ocrWords),
+    );
   }
 
   ///
   /// OCR Screen
   ///
-  Widget _getOcrScreen(BuildContext context) {
+  Widget _getOcrScreen(BuildContext context, SessionItems session) {
     List<Widget> items = [];
 
     items.add(
@@ -102,13 +99,17 @@ class OcrScreenState extends State<OcrScreen> {
       ),
     );
 
-    items.add(const Padding(
-      padding: EdgeInsets.only(
+    items.add(Padding(
+      padding: const EdgeInsets.only(
         left: 18,
         right: 18,
         bottom: 12,
       ),
-      child: ElevatedButton(onPressed: null, child: Text("Analisar")),
+      child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, CardHistory.routeName);
+          },
+          child: const Text("Analisar")),
     ));
 
     return ListView(
@@ -145,7 +146,7 @@ class OcrScreenState extends State<OcrScreen> {
     }
 
     if (!mounted) return;
-
+    ocrWords.add(texts.first.value);
     setState(() => _textsOcr = texts);
   }
 }

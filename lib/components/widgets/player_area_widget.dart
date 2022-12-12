@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class PlayerAreaWidget extends StatefulWidget {
-  const PlayerAreaWidget(
+  PlayerAreaWidget(
       {super.key,
       this.color = const Color(0xFFFFE306),
       this.child,
       required this.invert});
 
-  final Color color;
+  Color color;
   final bool invert;
   //Caso necessite passar um child
   final Widget? child;
@@ -20,7 +20,7 @@ class PlayerAreaWidget extends StatefulWidget {
 class _PlayerAreaWidgetState extends State<PlayerAreaWidget> {
   //
   //
-  Color _actualColor = Colors.yellow;
+  Color _actualColor = Colors.black;
   int _life = 20;
 
   void changeColor(Color color) {
