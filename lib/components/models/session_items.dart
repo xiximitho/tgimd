@@ -16,7 +16,7 @@ class SessionItems extends ChangeNotifier {
     notifyListeners();
   }
 
-  int _playerCounter = 2;
+  int _playerCounter = 4;
 
   int get playerCounter => _playerCounter;
 

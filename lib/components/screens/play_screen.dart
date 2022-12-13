@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multi_split_view/multi_split_view.dart';
 import 'package:provider/provider.dart';
 import 'package:tgimd/components/widgets/player_area_widget.dart';
 
@@ -34,54 +35,60 @@ class PlayScreenState extends State<PlayScreen> {
   Widget build(BuildContext context) {
     playerCount = context.watch<SessionItems>();
     return Scaffold(
-      body: _playerArea(context, playerCount.playerCounter),
+      body: _playerArea(context, playerCount),
     );
   }
 
 //Lógica para a area do jogador
-  Widget _playerArea(BuildContext context, int playerCounter) {
+  Widget _playerArea(BuildContext context, SessionItems playerCounter) {
     return SafeArea(
       child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Align(
-          alignment: const AlignmentDirectional(0, 0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                  child: PlayerAreaWidget(
-                invert: true,
-              )),
-              Align(
-                alignment: const AlignmentDirectional(0, 0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 30,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.red, Colors.yellow],
-                      stops: [0, 1],
-                      begin: AlignmentDirectional(2, 0),
-                      end: AlignmentDirectional(0, 25),
-                    ),
-                  ),
-                  child: const ButtonBar(
-                      alignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(onPressed: null, child: Text("\$"))
-                      ]),
-                ),
-              ),
-              Expanded(
-                  child: PlayerAreaWidget(
-                invert: false,
-              )),
-            ],
-          ),
-        ),
-      ),
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: _multiSplitView(context, playerCounter.playerCounter)),
     );
+  }
+
+  Widget _multiSplitView(BuildContext context, int playerCounter) {
+    if (playerCounter == 4) {
+      return MultiSplitView(
+        axis: Axis.vertical,
+        children: [
+          MultiSplitView(axis: Axis.horizontal, children: [
+            PlayerAreaWidget(invert: true),
+            PlayerAreaWidget(invert: true),
+          ]),
+          MultiSplitView(children: [
+            PlayerAreaWidget(invert: false),
+            PlayerAreaWidget(invert: false),
+          ])
+        ],
+      );
+    } else if (playerCounter == 3) {
+      return MultiSplitView(
+        axis: Axis.vertical,
+        children: [
+          PlayerAreaWidget(invert: true),
+          MultiSplitView(axis: Axis.horizontal, children: [
+            PlayerAreaWidget(invert: false),
+            PlayerAreaWidget(invert: false),
+          ]),
+        ],
+      );
+    } else if (playerCounter == 2) {
+      return MultiSplitView(
+        axis: Axis.vertical,
+        children: [
+          PlayerAreaWidget(invert: true),
+          PlayerAreaWidget(invert: false),
+        ],
+      );
+    } else {
+      return MultiSplitView(
+        axis: Axis.vertical,
+        children: [
+          PlayerAreaWidget(invert: false),
+        ],
+      );
+    }
   }
 }
