@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tgimd/components/models/select_color.dart';
-import 'package:tgimd/components/screens/card_history.dart';
+import 'package:tgimd/components/models/session_items.dart';
+import 'package:tgimd/components/screens/card_history_screen.dart';
 import 'package:tgimd/components/screens/ocr_screen.dart';
+import 'package:tgimd/components/screens/play_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,10 +25,11 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         routes: {
+          PlayScreen.routeName: (context) => const PlayScreen(),
           OcrScreen.routeName: (context) => const OcrScreen(),
           CardHistory.routeName: (context) => const CardHistory()
         },
-        initialRoute: OcrScreen.routeName,
+        initialRoute: PlayScreen.routeName,
       ),
     );
   }

@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_vision_2/flutter_mobile_vision_2.dart';
 import 'package:provider/provider.dart';
-import 'package:tgimd/components/models/select_color.dart';
-import 'package:tgimd/components/screens/card_history.dart';
+import 'package:tgimd/components/models/session_items.dart';
+import 'package:tgimd/components/screens/card_history_screen.dart';
 
 import '../widgets/card_detail.dart';
 

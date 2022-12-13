@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:tgimd/components/screens/ocr_screen.dart';
 
 class PlayerAreaWidget extends StatefulWidget {
   PlayerAreaWidget(
@@ -20,7 +21,7 @@ class PlayerAreaWidget extends StatefulWidget {
 class _PlayerAreaWidgetState extends State<PlayerAreaWidget> {
   //
   //
-  Color _actualColor = Colors.black;
+  Color _actualColor = Colors.red;
   int _life = 20;
 
   void changeColor(Color color) {
@@ -86,7 +87,8 @@ class _PlayerAreaWidgetState extends State<PlayerAreaWidget> {
               ? ButtonBar(
                   children: [
                     IconButton(
-                        onPressed: () => {},
+                        onPressed: () =>
+                            {Navigator.pushNamed(context, OcrScreen.routeName)},
                         icon: const Icon(Icons.stay_primary_portrait_rounded))
                   ],
                 )
@@ -160,11 +162,13 @@ class _PlayerAreaWidgetState extends State<PlayerAreaWidget> {
                         icon: const Icon(Icons.restart_alt_outlined))
                   ],
                 )
-              : const ButtonBar(
+              : ButtonBar(
                   children: [
                     IconButton(
-                        onPressed: null,
-                        icon: Icon(Icons.stay_primary_portrait_rounded))
+                        onPressed: (() {
+                          Navigator.pushNamed(context, OcrScreen.routeName);
+                        }),
+                        icon: const Icon(Icons.stay_primary_portrait_rounded))
                   ],
                 ),
         ],

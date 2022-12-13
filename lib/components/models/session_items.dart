@@ -15,4 +15,13 @@ class SessionItems extends ChangeNotifier {
     _ocrWords.remove(itemNo);
     notifyListeners();
   }
+
+  int _playerCounter = 2;
+
+  int get playerCounter => _playerCounter;
+
+  set playerCounter(int playerCounter) {
+    _playerCounter = playerCounter;
+    notifyListeners();
+  }
 }

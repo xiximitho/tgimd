@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/select_color.dart';
+import '../models/session_items.dart';
 
 class CardOcrWidget extends StatelessWidget {
   final String ocrText;
