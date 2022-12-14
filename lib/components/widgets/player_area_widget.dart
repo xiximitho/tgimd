@@ -3,13 +3,8 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:tgimd/components/screens/ocr_screen.dart';
 
 class PlayerAreaWidget extends StatefulWidget {
-  PlayerAreaWidget(
-      {super.key,
-      this.color = const Color(0xFFFFE306),
-      this.child,
-      required this.invert});
+  const PlayerAreaWidget({super.key, this.child, required this.invert});
 
-  Color color;
   final bool invert;
   //Caso necessite passar um child
   final Widget? child;
@@ -21,7 +16,7 @@ class PlayerAreaWidget extends StatefulWidget {
 class _PlayerAreaWidgetState extends State<PlayerAreaWidget> {
   //
   //
-  Color _actualColor = Colors.red;
+  Color _actualColor = Colors.black54;
   int _life = 20;
 
   void changeColor(Color color) {
@@ -96,7 +91,7 @@ class _PlayerAreaWidgetState extends State<PlayerAreaWidget> {
                   children: [
                     IconButton(
                         onPressed: _callPicker,
-                        icon: const Icon(Icons.settings)),
+                        icon: const Icon(Icons.color_lens_outlined)),
                     IconButton(
                         onPressed: _resetLife,
                         icon: const Icon(Icons.restart_alt_outlined))
@@ -156,7 +151,7 @@ class _PlayerAreaWidgetState extends State<PlayerAreaWidget> {
                   children: [
                     IconButton(
                         onPressed: _callPicker,
-                        icon: const Icon(Icons.settings)),
+                        icon: const Icon(Icons.color_lens_outlined)),
                     IconButton(
                         onPressed: _resetLife,
                         icon: const Icon(Icons.restart_alt_outlined))
